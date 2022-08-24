@@ -10,12 +10,16 @@ namespace ToyRobot.ConsoleApp
         {
             var serviceCollection = new ServiceCollection();
 
+            RegisterServices(serviceCollection);
+
             DiToyRobot.Configure(serviceCollection);
 
             var commands = new string[]
             {
-                "PLACE 0,0,NORTH",
-                "MOVE"
+                "PLACE 0,0,WEST",
+                "MOVE",
+                "MOVE",
+                "REPORT"
             };
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
@@ -24,7 +28,12 @@ namespace ToyRobot.ConsoleApp
 
             toyRobotService.ProcessCommand(commands);
 
-            Console.WriteLine("Hello, World!");
+            
+        }
+
+        private static void RegisterServices(IServiceCollection services)
+        {
+            services.AddScoped<IReportService, ReportService>();
         }
     }
 }
