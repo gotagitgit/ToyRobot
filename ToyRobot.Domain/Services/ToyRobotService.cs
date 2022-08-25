@@ -6,8 +6,7 @@ namespace ToyRobot.Domain.Services
     public sealed class ToyRobotService : IToyRobotService
     {
         private readonly IParseStringCommandService _parseStringCommandService;
-        private readonly ICommandHandlerFactory _commandHandlerFactory;
-        private Table _table;
+        private readonly ICommandHandlerFactory _commandHandlerFactory;        
 
         public ToyRobotService(
             IParseStringCommandService parseStringCommandService,
@@ -17,16 +16,9 @@ namespace ToyRobot.Domain.Services
             _commandHandlerFactory = commandHandlerFactory;
         }
 
-        public void CreateTable(int length, int width)
-        {
-            _table = new Table(length, width);
-        }
-
         public void ProcessCommand(string[] commandStrings)
-        {
-            var table = _table;
-            if (table == null)
-                table = Table.Default();
+        {            
+            var table = Table.Default();
 
             foreach (var commandString in commandStrings)
             {
