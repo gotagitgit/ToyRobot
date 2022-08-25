@@ -5,14 +5,14 @@ namespace ToyRobot.Domain.Factories
 {
     public sealed class CommandHandlerFactory : ICommandHandlerFactory
     {
-        private readonly Dictionary<Command, ICommandHandler> _commandHandlers;
+        private readonly Dictionary<Command, ICommand> _commandHandlers;
 
-        public CommandHandlerFactory(IEnumerable<ICommandHandler> commandHandlers)
+        public CommandHandlerFactory(IEnumerable<ICommand> commandHandlers)
         {
             _commandHandlers = commandHandlers.ToDictionary(x => x.Command, x => x);
         }
 
-        public ICommandHandler Create(Command command)
+        public ICommand Create(Command command)
         {
             if (_commandHandlers.TryGetValue(command, out var handler))
                 return handler;

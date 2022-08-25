@@ -29,7 +29,7 @@ namespace ToyRobot.Domain.Services
 
                 var commandHandler = _commandHandlerFactory.Create(commandPayload.Command);
 
-                table = commandHandler.Handle(commandPayload);
+                table = commandHandler.Execute(commandPayload);
             }
         }
     }

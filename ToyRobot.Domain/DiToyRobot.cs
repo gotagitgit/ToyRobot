@@ -16,11 +16,11 @@ namespace ToyRobot.Domain
 
         private static void RegisterCommands(IServiceCollection services)
         {
-            services.AddScoped<ICommandHandler, PlaceCommandHandler>();
-            services.AddScoped<ICommandHandler, MoveCommandHandler>();
-            services.AddScoped<ICommandHandler, ReportCommandHandler>();
-            services.AddScoped<ICommandHandler, LeftCommandHandler>();
-            services.AddScoped<ICommandHandler, RightCommndHandler>();
+            services.AddScoped<ICommand, PlaceCommand>();
+            services.AddScoped<ICommand, MoveCommand>();
+            services.AddScoped<ICommand, ReportCommand>();
+            services.AddScoped<ICommand, RotateLeftCommand>();
+            services.AddScoped<ICommand, RotateRightCommand>();
         }
 
         private static void RegisterFactories(IServiceCollection services)

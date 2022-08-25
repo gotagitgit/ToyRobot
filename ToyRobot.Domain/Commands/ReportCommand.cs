@@ -3,18 +3,18 @@ using ToyRobot.Domain.Services;
 
 namespace ToyRobot.Domain.Commands
 {
-    public class ReportCommandHandler : ICommandHandler
+    public class ReportCommand : ICommand
     {
         private readonly IReportService _reportService;
 
-        public ReportCommandHandler(IReportService reportService)
+        public ReportCommand(IReportService reportService)
         {
             _reportService = reportService;
         }
 
         public Command Command => Command.Report;
 
-        public Table Handle(CommandPayload payload)
+        public Table Execute(CommandPayload payload)
         {
             var coordinate = payload.Table.Robot.Coordinate;
 

@@ -2,11 +2,11 @@
 
 namespace ToyRobot.Domain.Commands
 {
-    public sealed class RightCommndHandler : RotateCommandBase, ICommandHandler
+    public sealed class RotateRightCommand : RotateBase, ICommand
     {
         public Command Command => Command.Right;        
 
-        public Table Handle(CommandPayload payload)
+        public Table Execute(CommandPayload payload)
         {
             return Rotate(payload.Table);
         }

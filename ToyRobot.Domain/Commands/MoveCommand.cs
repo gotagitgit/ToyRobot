@@ -2,13 +2,13 @@
 
 namespace ToyRobot.Domain.Commands
 {
-    public sealed class MoveCommandHandler : ICommandHandler
+    public sealed class MoveCommand : ICommand
     {
         private const int Move1Unit = 1;
 
         public Command Command => Command.Move;
 
-        public Table Handle(CommandPayload payload)
+        public Table Execute(CommandPayload payload)
         {
             var robot = payload.Table.Robot;            
 

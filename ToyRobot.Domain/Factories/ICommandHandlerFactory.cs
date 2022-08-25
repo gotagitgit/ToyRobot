@@ -5,6 +5,6 @@ namespace ToyRobot.Domain.Factories
 {
     public interface ICommandHandlerFactory
     {
-        ICommandHandler Create(Command command);
+        ICommand Create(Command command);
     }
 }

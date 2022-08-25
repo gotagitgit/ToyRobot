@@ -2,11 +2,11 @@
 
 namespace ToyRobot.Domain.Commands
 {
-    public sealed class PlaceCommandHandler : ICommandHandler
+    public sealed class PlaceCommand : ICommand
     {
         public Command Command => Command.Place;
 
-        public Table Handle(CommandPayload payload)
+        public Table Execute(CommandPayload payload)
         {
             var table = payload.Table;
 

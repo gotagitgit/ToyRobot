@@ -2,10 +2,10 @@
 
 namespace ToyRobot.Domain.Commands
 {
-    public interface ICommandHandler
+    public interface ICommand
     {
         Command Command { get; }
 
-        Table Handle(CommandPayload payload);
+        Table Execute(CommandPayload payload);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace ToyRobot.Domain.Commands
 {
-    public abstract class RotateCommandBase
+    public abstract class RotateBase
     {
         protected Table Rotate(Table table)
         {
