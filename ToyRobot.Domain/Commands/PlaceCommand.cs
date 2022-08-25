@@ -14,7 +14,8 @@ namespace ToyRobot.Domain.Commands
             {
                 var robot = new Robot(placeCommandPayload.X, placeCommandPayload.Y, placeCommandPayload.Direction);
 
-                return table.WithRobot(robot);
+                return table.SetRobotInPlace()
+                            .WithRobot(robot);
             }
 
             return table;
