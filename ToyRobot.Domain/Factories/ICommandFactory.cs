@@ -3,7 +3,7 @@ using ToyRobot.Domain.Models;
 
 namespace ToyRobot.Domain.Factories
 {
-    public interface ICommandHandlerFactory
+    public interface ICommandFactory
     {
         ICommand Create(Command command);
     }

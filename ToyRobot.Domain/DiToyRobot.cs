@@ -25,7 +25,7 @@ namespace ToyRobot.Domain
 
         private static void RegisterFactories(IServiceCollection services)
         {
-            services.AddScoped<ICommandHandlerFactory, CommandHandlerFactory>();
+            services.AddScoped<ICommandFactory, CommandFactory>();
             services.AddScoped<ICommandPayloadFactory, CommandPayloadFactory>();
             services.AddScoped<IParameterizeCommandPayloadFactory, PlaceCommandPayloadFactory>();
         }

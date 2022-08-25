@@ -6,11 +6,11 @@ namespace ToyRobot.Domain.Services
     public sealed class ToyRobotService : IToyRobotService
     {
         private readonly IParseStringCommandService _parseStringCommandService;
-        private readonly ICommandHandlerFactory _commandHandlerFactory;        
+        private readonly ICommandFactory _commandHandlerFactory;        
 
         public ToyRobotService(
             IParseStringCommandService parseStringCommandService,
-            ICommandHandlerFactory commandHandlerFactory)
+            ICommandFactory commandHandlerFactory)
         {
             _parseStringCommandService = parseStringCommandService;
             _commandHandlerFactory = commandHandlerFactory;

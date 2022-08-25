@@ -3,11 +3,11 @@ using ToyRobot.Domain.Models;
 
 namespace ToyRobot.Domain.Factories
 {
-    public sealed class CommandHandlerFactory : ICommandHandlerFactory
+    public sealed class CommandFactory : ICommandFactory
     {
         private readonly Dictionary<Command, ICommand> _commandHandlers;
 
-        public CommandHandlerFactory(IEnumerable<ICommand> commandHandlers)
+        public CommandFactory(IEnumerable<ICommand> commandHandlers)
         {
             _commandHandlers = commandHandlers.ToDictionary(x => x.Command, x => x);
         }
