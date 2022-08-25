@@ -1,7 +1,9 @@
-﻿namespace ToyRobot.Domain.Services
+﻿using ToyRobot.Domain.Models;
+
+namespace ToyRobot.Domain.Services
 {
     public interface IReportService
     {
-        void Report(string message);
+        void Report(Coordinate coordinate);
     }
 }

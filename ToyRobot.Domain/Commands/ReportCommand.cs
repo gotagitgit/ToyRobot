@@ -16,9 +16,7 @@ namespace ToyRobot.Domain.Commands
 
         public Table Execute(CommandPayload payload)
         {
-            var coordinate = payload.Table.Robot.Coordinate;
-
-            _reportService.Report($"Output: {coordinate.X}, {coordinate.Y}, {coordinate.Direction}");
+            _reportService.Report(payload.Table.Robot.Coordinate);
 
             return payload.Table;
         }
