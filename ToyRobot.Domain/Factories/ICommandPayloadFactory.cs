@@ -2,7 +2,7 @@
 
 namespace ToyRobot.Domain.Factories
 {
-    internal interface ICommandPayloadFactory
+    public interface ICommandPayloadFactory
     {
         CommandPayload Create(Table table, Command command, string commandString);
     }

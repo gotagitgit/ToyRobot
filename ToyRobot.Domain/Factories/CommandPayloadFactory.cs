@@ -2,7 +2,7 @@
 
 namespace ToyRobot.Domain.Factories
 {
-    internal class CommandPayloadFactory : ICommandPayloadFactory
+    public class CommandPayloadFactory : ICommandPayloadFactory
     {
         private readonly Dictionary<Command, IParameterizeCommandPayloadFactory> _parameterizeCommandPayloadFactory;
 

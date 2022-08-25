@@ -12,7 +12,21 @@ namespace ToyRobot.ConsoleApp
 
             RegisterServices(serviceCollection);
 
-            var commands = GetCommands();
+            //var commands = GetCommands();
+
+            var commands = new string[]
+            {
+                "MOVE",
+                "LEFT",
+                "RIGHT",
+                "PLACE 0,0,EAST",
+                "MOVE",
+                "MOVE",
+                "PLACE 3,3,EAST",
+                "MOVE",
+                "RIGHT",
+                "REPORT"
+            };
 
             ExecuteCommands(commands, serviceCollection);
         }

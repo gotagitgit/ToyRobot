@@ -3,7 +3,7 @@ using ToyRobot.Domain.Models;
 
 namespace ToyRobot.Domain.Services
 {
-    internal sealed class ParseStringCommandService : IParseStringCommandService
+    public sealed class ParseStringCommandService : IParseStringCommandService
     {
         private readonly ICommandPayloadFactory _commandPayloadFactory;
 

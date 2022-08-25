@@ -2,7 +2,7 @@
 
 namespace ToyRobot.Domain.Factories
 {
-    internal class PlaceCommandPayloadFactory : IParameterizeCommandPayloadFactory
+    public class PlaceCommandPayloadFactory : IParameterizeCommandPayloadFactory
     {
         public Command Command => Command.Place;
 
