@@ -7,7 +7,7 @@ namespace ToyRobot.ConsoleApp
     public class Program
     {
         static void Main(string[] args)
-        {
+        {            
             var serviceCollection = new ServiceCollection();
 
             RegisterServices(serviceCollection);
@@ -16,9 +16,13 @@ namespace ToyRobot.ConsoleApp
 
             var commands = new string[]
             {
-                "PLACE 0,0,WEST",
+                "PLACE 0,0,EAST",
                 "MOVE",
                 "MOVE",
+                "REPORT",
+                "RIGHT",
+                "RIGHT",
+                "RIGHT",
                 "REPORT"
             };
 
@@ -26,9 +30,7 @@ namespace ToyRobot.ConsoleApp
 
             var toyRobotService = serviceProvider.GetService<IToyRobotService>();
 
-            toyRobotService.ProcessCommand(commands);
-
-            
+            toyRobotService.ProcessCommand(commands);            
         }
 
         private static void RegisterServices(IServiceCollection services)

@@ -2,9 +2,9 @@
 {
     public enum Direction
     {
-        North,
-        East,
-        West,
-        South
+        North = 90,
+        East = 0,
+        West = 180,
+        South = 270
     }
 }

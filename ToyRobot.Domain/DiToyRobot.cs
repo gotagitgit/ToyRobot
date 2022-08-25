@@ -19,6 +19,8 @@ namespace ToyRobot.Domain
             services.AddScoped<ICommandHandler, PlaceCommandHandler>();
             services.AddScoped<ICommandHandler, MoveCommandHandler>();
             services.AddScoped<ICommandHandler, ReportCommandHandler>();
+            services.AddScoped<ICommandHandler, LeftCommandHandler>();
+            services.AddScoped<ICommandHandler, RightCommndHandler>();
         }
 
         private static void RegisterFactories(IServiceCollection services)

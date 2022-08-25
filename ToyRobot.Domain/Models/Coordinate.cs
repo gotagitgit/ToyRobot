@@ -22,5 +22,10 @@
         {
             return new Coordinate(X, y, Direction);
         }
+
+        public Coordinate WithDirection(Direction direction)
+        {
+            return new Coordinate(X, Y, direction);
+        }
     }
 }
