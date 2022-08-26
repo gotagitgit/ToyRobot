@@ -19,8 +19,8 @@ namespace ToyRobot.Domain.Factories
         {
             var parameters = GetParameters(commandString);
 
-            if (TryGetSpecificationException(parameters, commandString, out var errorMessages))
-                throw new ArgumentException(errorMessages[0]);
+            if (TryGetSpecificationException(parameters, commandString, out var errorMessage))
+                throw new ArgumentException(errorMessage);
 
             _ = int.TryParse(parameters[0], out var xAxis);
 
@@ -42,15 +42,16 @@ namespace ToyRobot.Domain.Factories
             return parameters.ToList();
         }
 
-        private bool TryGetSpecificationException(List<string> parameters, string commandString, out List<string> errorMessages)
+        private bool TryGetSpecificationException(List<string> parameters, string commandString, out string? errorMessage)
         {
             var specifications = _placeCommandSpecifications.Select(x =>
                       (
-                          IsSatisfied: x.IsSatisfiedBy(parameters, commandString), 
-                          ErrorMessages: x.ExceptionMessages
+                          IsSatisfied: x.IsSatisfiedBy(parameters, commandString),
+                          ExceptionMessage: x.ExceptionMessage
                       )).ToList();
 
-            errorMessages = specifications.Where(x => !x.IsSatisfied).SelectMany(x => x.ErrorMessages).ToList();
+            errorMessage = specifications.Where(x => !x.IsSatisfied)
+                                .Select(x => x.ExceptionMessage).FirstOrDefault();
 
             return specifications.Any(x => !x.IsSatisfied);
         }

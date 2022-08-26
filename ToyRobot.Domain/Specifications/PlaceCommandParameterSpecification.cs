@@ -6,13 +6,13 @@ namespace ToyRobot.Domain.Specifications
 {
     public class PlaceCommandParameterSpecification : IPlaceCommandSpecification
     {
-        public List<string> ExceptionMessages { get; } = new List<string>();
+        public string ExceptionMessage { get; private set; } = String.Empty;
 
         public bool IsSatisfiedBy(List<string> parameters, string commandString)
         {
             if (!IsValidateParameterPattern(commandString))
             {
-                ExceptionMessages.Add($"{commandString} has invalid parameter format");
+                ExceptionMessage = ($"{commandString} has invalid parameter format");
 
                 return false;
             }

@@ -2,7 +2,7 @@
 {
     public interface IPlaceCommandSpecification
     {
-        List<string> ExceptionMessages { get; }
+        string ExceptionMessage { get; }
 
         bool IsSatisfiedBy(List<string> parameters, string commandString);
     }

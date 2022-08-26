@@ -2,13 +2,13 @@
 {
     public sealed class PlaceCommandSpecification : IPlaceCommandSpecification
     {
-        public List<string> ExceptionMessages { get; } = new List<string>();
+        public string ExceptionMessage { get; private set; } = String.Empty;
 
         public bool IsSatisfiedBy(List<string> parameters, string commandString)
         {
             if (parameters.Count > 3)
             {
-                ExceptionMessages.Add($"{commandString} has more than the allowed number of parameters");
+                ExceptionMessage = ($"{commandString} has more than the allowed number of parameters");
 
                 return false;
             }
