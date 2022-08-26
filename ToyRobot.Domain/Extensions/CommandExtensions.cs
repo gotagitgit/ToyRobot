@@ -2,7 +2,7 @@
 
 namespace ToyRobot.Domain.Extensions
 {
-    public static class CommandExtensions
+    internal static class CommandExtensions
     {
         public static string GetParameters(this Command command, string commandString)
         {

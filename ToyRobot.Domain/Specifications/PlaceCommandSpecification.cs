@@ -15,7 +15,7 @@ namespace ToyRobot.Domain.Specifications
 
         public bool IsSatisfiedBy(List<string> parameters, string commandString)
         {
-            return ValidateParameterFormat(parameters, commandString) && 
+            return ValidateParameterFormat(commandString) && 
                    ValidateParameterCount(parameters, commandString);
 
         }
@@ -32,7 +32,7 @@ namespace ToyRobot.Domain.Specifications
             return true;
         }
 
-        private bool ValidateParameterFormat(List<string> parameters, string commandString)
+        private bool ValidateParameterFormat(string commandString)
         {
             if (!IsValidateParameterPattern(commandString))
             {
