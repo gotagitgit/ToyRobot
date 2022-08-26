@@ -4,7 +4,8 @@
 
 Create a text file that contains the command and save it to your local directory.  
 
-You can use visual studio 2022 to build and run the application.  Set ToyRobot.ConsoleApp as the startup project and then run the application. 
+The console app runs on .NETCore 6.0. Make sure that you've installed SDK on your machine.
+You can use visual studio 2022 to build and run the application.  Set **ToyRobot.ConsoleApp** as the startup project and then run the application. 
 
 Once application is running, it will prompt you to specify the file path of the commands you created.
 
