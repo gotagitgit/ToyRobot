@@ -8,12 +8,10 @@ namespace ToyRobot.Domain.Factories
 
         public CommandPayload Create(Table table, Command command, string commandString)
         {
-            var commandArgs = commandString.Split(' ').ToList();
+            var parameters = GetParameters(commandString);
 
-            if (commandArgs.Count < 2)
+            if (parameters.Count == 0)
                 throw new ArgumentException($"{commandString} is missing parameters.");
-
-            var parameters = commandArgs[1].Split(',', StringSplitOptions.TrimEntries).ToList();
 
             if (!(parameters.Count == 3))
                 throw new ArgumentException($"{commandString} has missing parameter arguments");
@@ -27,6 +25,17 @@ namespace ToyRobot.Domain.Factories
                 throw new ArgumentException($"{commandString} direction parameter is invalid.");
 
             return new PlaceCommandPayload(xAxis, yAxis, direction, table, command);
+        }
+
+        private static List<string> GetParameters(string commandString)
+        {
+            var placeCommandLength = Command.Place.ToString().Count();
+
+            var parameterString = commandString.Trim().Substring(placeCommandLength);
+
+            var parameters = parameterString.Split(',', placeCommandLength, StringSplitOptions.TrimEntries);
+
+            return parameters.ToList();
         }
 
         private static int ToInt(string value)

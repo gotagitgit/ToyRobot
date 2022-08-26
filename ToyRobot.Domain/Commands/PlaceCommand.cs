@@ -12,7 +12,9 @@ namespace ToyRobot.Domain.Commands
 
             if (payload is PlaceCommandPayload placeCommandPayload)
             {
-                var robot = new Robot(placeCommandPayload.X, placeCommandPayload.Y, placeCommandPayload.Direction);
+                var coordinate = new Coordinate(placeCommandPayload.X, placeCommandPayload.Y, placeCommandPayload.Direction);
+
+                var robot = new Robot(coordinate);
 
                 return table.SetRobotInPlace()
                             .WithRobot(robot);

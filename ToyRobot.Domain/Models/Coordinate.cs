@@ -13,6 +13,8 @@
         public int Y { get; }
         public Direction Direction { get; }
 
+        public static Coordinate Origin => new Coordinate(0, 0, Direction.North);
+
         public Coordinate WithXCoordinate(int x)
         {
             return new Coordinate(x, Y, Direction);
