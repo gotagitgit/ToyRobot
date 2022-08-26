@@ -2,6 +2,7 @@
 using ToyRobot.Domain.Commands;
 using ToyRobot.Domain.Factories;
 using ToyRobot.Domain.Services;
+using ToyRobot.Domain.Specifications;
 
 namespace ToyRobot.Domain
 {
@@ -12,6 +13,7 @@ namespace ToyRobot.Domain
             RegisterCommands(services);
             RegisterFactories(services);
             RegisterServices(services);
+            RegisterSpecifications(services);
         }
 
         private static void RegisterCommands(IServiceCollection services)
@@ -34,6 +36,11 @@ namespace ToyRobot.Domain
         {
             services.AddScoped<IParseStringCommandService, ParseStringCommandService>();
             services.AddScoped<IToyRobotService, ToyRobotService>();
+        }
+
+        private static void RegisterSpecifications(IServiceCollection services)
+        {
+            services.AddScoped<IPlaceCommandSpecification, PlaceCommandSpecification>();
         }
     }
 }

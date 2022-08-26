@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using ToyRobot.Domain.Factories;
 using ToyRobot.Domain.Models;
+using ToyRobot.Domain.Specifications;
 using Xunit;
 
 namespace ToyRobot.Domain.Tests
@@ -9,17 +10,18 @@ namespace ToyRobot.Domain.Tests
     {
         public PlaceCommandPayloadFactoryTests()
         {
-            Sut = new PlaceCommandPayloadFactory();
+            Sut = new PlaceCommandPayloadFactory(new PlaceCommandSpecification());
         }
 
         public PlaceCommandPayloadFactory Sut { get; }
 
         [Theory]
         [InlineData("PLACE 0,0,NORTH")]
-        [InlineData("place 0,0,NORTH")]
+        [InlineData("place 0,0,north")]
         [InlineData("PlaCE 0,0,NORTH")]
         [InlineData(" PLACE 0,0,NORTH ")]
         [InlineData("PLACE 0, 0,  NORTH")]
+        [InlineData("PLACE0,0,North")]        
         public void Can_create_place_command_payload(string commandString)
         {
             // Arrange            
@@ -34,5 +36,35 @@ namespace ToyRobot.Domain.Tests
             result.Should().BeEquivalentTo(expected);
         }
 
+        [Theory]
+        [InlineData("PLACE")]
+        [InlineData("PLACE 0")]
+        [InlineData("PLACE 0,0")]
+        [InlineData("PLACE 0,0,0")]
+        [InlineData("PLACE 0,,North")]
+        [InlineData("PLACE ,0,North")]
+        [InlineData("PLACE 0,0,NorthWest")]
+        [InlineData("PLACE north,south,North")]
+        [InlineData("PLACE -1,-1,North")]
+        [InlineData("PLACE 1.2,2,North")]
+        [InlineData("PLACE 1,2.5,North")]
+        public void Should_throw_when_parameter_format_is_invalid(string commandString)
+        {
+            // Arrange            
+            var table = Table.Default();
+            var command = Command.Place;           
+
+            // Act 
+            var ex  = Assert.Throws<ArgumentException>(() => Sut.Create(table, command, commandString));
+
+            // Assert
+            ex.Message.Should().BeEquivalentTo($"{commandString} has invalid parameter format");
+        }
+
+        [Fact]
+        public void Should_throw_when_parameter_count_is_more_than_expected()
+        {
+
+        }
     }
 }

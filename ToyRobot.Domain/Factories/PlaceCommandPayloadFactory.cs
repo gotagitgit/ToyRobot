@@ -1,51 +1,45 @@
-﻿using ToyRobot.Domain.Models;
+﻿using ToyRobot.Domain.Extensions;
+using ToyRobot.Domain.Models;
+using ToyRobot.Domain.Specifications;
 
 namespace ToyRobot.Domain.Factories
 {
     public class PlaceCommandPayloadFactory : IParameterizeCommandPayloadFactory
     {
+        private readonly IPlaceCommandSpecification _placeCommandSpecification;
+
+        public PlaceCommandPayloadFactory(IPlaceCommandSpecification placeCommandSpecification)
+        {
+            _placeCommandSpecification = placeCommandSpecification;
+        }
+
         public Command Command => Command.Place;
 
         public CommandPayload Create(Table table, Command command, string commandString)
         {
             var parameters = GetParameters(commandString);
 
-            if (parameters.Count == 0)
-                throw new ArgumentException($"{commandString} is missing parameters.");
+            if (!_placeCommandSpecification.IsSatisfiedBy(parameters, commandString))
+                throw new ArgumentException(_placeCommandSpecification.ExceptionMessages[0]);
 
-            if (!(parameters.Count == 3))
-                throw new ArgumentException($"{commandString} has missing parameter arguments");
+            _ = int.TryParse(parameters[0], out var xAxis);
 
-            var xAxis = ToInt(parameters[0]);
-            var yAxis = ToInt(parameters[1]);
+            _ = int.TryParse(parameters[1], out var yAxis);
 
-            var isValidDirectionParameter = Enum.TryParse<Direction>(parameters[2], true, out var direction);
-
-            if (!isValidDirectionParameter)
-                throw new ArgumentException($"{commandString} direction parameter is invalid.");
+            _ = Enum.TryParse<Direction>(parameters[2], true, out var direction);
 
             return new PlaceCommandPayload(xAxis, yAxis, direction, table, command);
         }
 
-        private static List<string> GetParameters(string commandString)
+        private List<string> GetParameters(string commandString)
         {
-            var placeCommandLength = Command.Place.ToString().Count();
+            var placeCommandLength = Command.ToString().Count();
 
-            var parameterString = commandString.Trim().Substring(placeCommandLength);
+            var parameterString = Command.GetParameters(commandString);
 
             var parameters = parameterString.Split(',', placeCommandLength, StringSplitOptions.TrimEntries);
 
             return parameters.ToList();
-        }
-
-        private static int ToInt(string value)
-        {
-            var isValidInteger = int.TryParse(value, out var integerValue);
-
-            if (isValidInteger)
-                return integerValue;
-
-            throw new ArgumentException($"Can't parse the {value} from the parameter to integer.");
         }
     }
 }

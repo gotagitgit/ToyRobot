@@ -18,17 +18,7 @@ namespace ToyRobot.ConsoleApp
             {                
                 "PLACE 0,0,EAST",
                 "MOVE",
-                "REPORT",
                 "MOVE",
-                "REPORT",
-                "MOVE",
-                "REPORT",
-                "MOVE",
-                "REPORT",
-                "MOVE",
-                "REPORT",
-                "MOVE",
-                "REPORT",
                 "REPORT"
             };
 
