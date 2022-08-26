@@ -20,8 +20,7 @@ namespace ToyRobot.Domain.Tests
         [InlineData("place 0,0,north")]
         [InlineData("PlaCE 0,0,NORTH")]
         [InlineData(" PLACE 0,0,NORTH ")]
-        [InlineData("PLACE 0, 0,  NORTH")]
-        [InlineData("PLACE0,0,North")]        
+        [InlineData("PLACE 0, 0,  NORTH")]      
         public void Can_create_place_command_payload(string commandString)
         {
             // Arrange            
@@ -64,7 +63,16 @@ namespace ToyRobot.Domain.Tests
         [Fact]
         public void Should_throw_when_parameter_count_is_more_than_expected()
         {
+            // Arrange            
+            var table = Table.Default();
+            var command = Command.Place;
+            var commandString = "PLACE 1,2,North,ExtraParam";
 
+            // Act 
+            var ex = Assert.Throws<ArgumentException>(() => Sut.Create(table, command, commandString));
+
+            // Assert
+            ex.Message.Should().BeEquivalentTo($"{commandString} has more than the allowed number of parameters");
         }
     }
 }
