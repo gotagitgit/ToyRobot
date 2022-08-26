@@ -35,9 +35,9 @@
 
         public bool IsRobotFalling(int x, int y)
         {
-            var isValidXAxis = x >= 0 && x <= _length;
+            var isValidXAxis = x >= 0 && x < _length;
 
-            var isValidYAxis = y >= 0 && y <= _width;
+            var isValidYAxis = y >= 0 && y < _width;
 
             return !isValidXAxis || !isValidYAxis;
         }

@@ -33,7 +33,7 @@ namespace ToyRobot.Domain.Commands
                 Direction.North => coordinate.WithYCoordinate(coordinate.Y + Move1Unit),
                 Direction.East => coordinate.WithXCoordinate(coordinate.X + Move1Unit),
                 Direction.West => coordinate.WithXCoordinate(coordinate.X - Move1Unit),
-                Direction.South => coordinate.WithYCoordinate(coordinate.X - Move1Unit),
+                Direction.South => coordinate.WithYCoordinate(coordinate.Y - Move1Unit),
                 _ => coordinate,
             };
         }        

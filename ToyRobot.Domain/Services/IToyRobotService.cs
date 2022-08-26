@@ -1,7 +1,9 @@
-﻿namespace ToyRobot.Domain.Services
+﻿using ToyRobot.Domain.Models;
+
+namespace ToyRobot.Domain.Services
 {
     public interface IToyRobotService
     {
-        void ProcessCommand(string[] commandStrings);
+        Table ProcessCommand(string[] commandStrings);
     }
 }

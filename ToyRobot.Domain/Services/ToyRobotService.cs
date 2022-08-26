@@ -16,7 +16,7 @@ namespace ToyRobot.Domain.Services
             _commandHandlerFactory = commandHandlerFactory;
         }
 
-        public void ProcessCommand(string[] commandStrings)
+        public Table ProcessCommand(string[] commandStrings)
         {            
             var table = Table.Default();
 
@@ -31,6 +31,8 @@ namespace ToyRobot.Domain.Services
                
                 table = commandHandler.Execute(commandPayload);
             }
+
+            return table;
         }
     }
 }

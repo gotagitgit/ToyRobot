@@ -15,16 +15,20 @@ namespace ToyRobot.ConsoleApp
             //var commands = GetCommands();
 
             var commands = new string[]
-            {
-                "MOVE",
-                "LEFT",
-                "RIGHT",
+            {                
                 "PLACE 0,0,EAST",
                 "MOVE",
+                "REPORT",
                 "MOVE",
-                "PLACE 3,3,EAST",
+                "REPORT",
                 "MOVE",
-                "RIGHT",
+                "REPORT",
+                "MOVE",
+                "REPORT",
+                "MOVE",
+                "REPORT",
+                "MOVE",
+                "REPORT",
                 "REPORT"
             };
 
@@ -45,7 +49,7 @@ namespace ToyRobot.ConsoleApp
 
             var toyRobotService = serviceProvider.GetService<IToyRobotService>();
 
-            toyRobotService.ProcessCommand(commands);
+            _ = toyRobotService?.ProcessCommand(commands);
         }
 
         private static void RegisterServices(IServiceCollection services)
