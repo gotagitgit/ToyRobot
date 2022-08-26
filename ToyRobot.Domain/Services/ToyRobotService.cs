@@ -27,9 +27,12 @@ namespace ToyRobot.Domain.Services
 
                 var commandPayload = _parseStringCommandService.Parse(commandString, table);
 
-                var commandHandler = _commandHandlerFactory.Create(commandPayload.Command);
-               
-                table = commandHandler.Execute(commandPayload);
+                var command = commandPayload.Command;
+
+                var commandHandler = _commandHandlerFactory.Create(command);
+                
+                if (table.IsRobotInPlace || command == Command.Place)
+                    table = commandHandler.Execute(commandPayload);
             }
 
             return table;

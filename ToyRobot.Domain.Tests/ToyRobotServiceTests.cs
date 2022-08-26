@@ -29,6 +29,20 @@ namespace ToyRobot.Domain.Tests
         }
 
         [Fact]
+        public void Ignore_place_command_when_coordinate_is_out_of_table_boundaries()
+        {
+            // Arrange
+            var commands = new string[] { $"PLACE 100,100,NORTH", "MOVE", "", "MOVE", "", "MOVE", "", "MOVE" };
+
+            // Act
+            var result = ToyRobotService.ProcessCommand(commands);
+
+            // Assert
+            var coordinate = result.Robot.Coordinate;
+            coordinate.Should().BeEquivalentTo(Coordinate.Origin);
+        }
+
+        [Fact]
         public void Should_ignore_commands_until_place_command_is_executed()
         {
             // Arrange
@@ -100,19 +114,6 @@ namespace ToyRobot.Domain.Tests
 
             // Assert
             ex.Message.Should().Be($"{invalidCommand} is not a valid command");
-        }
-
-        [Fact]
-        public void Should_throw_when_place_is_out_of_bounds()
-        {
-            // Arrange
-            var commands = new string[] { $"PLACE 100,100,NORTH", "MOVE", "", "MOVE", "", "MOVE",  "", "MOVE" };
-
-            // Act
-            var ex = Assert.Throws<InvalidOperationException>(() => ToyRobotService.ProcessCommand(commands));
-
-            // Assert
-            ex.Message.Should().Be("Place command 100 and 100 coordinates are out of bounds");
-        }
+        }        
     }
 }

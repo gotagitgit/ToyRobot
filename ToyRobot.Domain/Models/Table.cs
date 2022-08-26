@@ -21,16 +21,13 @@
         public bool IsRobotInPlace { get; }
 
         public Table WithRobot(Robot robot)
-        {         
-            return new Table(_length, _width, robot, IsRobotInPlace);
+        {               
+            return new Table(_length, _width, robot, IsRobotInPlace);          
         }
 
         public Table SetRobotInPlace()
-        {
-            if (IsRobotInPlace)
-                return new Table(_length, _width, Robot, true);
-
-            return this;
+        {            
+            return new Table(_length, _width, Robot, true);            
         }
 
         public bool IsRobotFalling(int x, int y)
