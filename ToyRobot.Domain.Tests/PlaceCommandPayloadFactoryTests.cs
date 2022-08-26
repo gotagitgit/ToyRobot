@@ -10,7 +10,13 @@ namespace ToyRobot.Domain.Tests
     {
         public PlaceCommandPayloadFactoryTests()
         {
-            Sut = new PlaceCommandPayloadFactory(new PlaceCommandSpecification());
+            var specifications = new List<IPlaceCommandSpecification>
+            {
+                new PlaceCommandSpecification(),
+                new PlaceCommandParameterSpecification()
+            };
+
+            Sut = new PlaceCommandPayloadFactory(specifications);
         }
 
         public PlaceCommandPayloadFactory Sut { get; }

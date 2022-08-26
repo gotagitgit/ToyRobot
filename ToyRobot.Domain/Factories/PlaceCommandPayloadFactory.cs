@@ -6,11 +6,11 @@ namespace ToyRobot.Domain.Factories
 {
     public class PlaceCommandPayloadFactory : IParameterizeCommandPayloadFactory
     {
-        private readonly IPlaceCommandSpecification _placeCommandSpecification;
+        private readonly List<IPlaceCommandSpecification> _placeCommandSpecifications;
 
-        public PlaceCommandPayloadFactory(IPlaceCommandSpecification placeCommandSpecification)
+        public PlaceCommandPayloadFactory(IEnumerable<IPlaceCommandSpecification> placeCommandSpecification)
         {
-            _placeCommandSpecification = placeCommandSpecification;
+            _placeCommandSpecifications = placeCommandSpecification.ToList();
         }
 
         public Command Command => Command.Place;
@@ -19,8 +19,8 @@ namespace ToyRobot.Domain.Factories
         {
             var parameters = GetParameters(commandString);
 
-            if (!_placeCommandSpecification.IsSatisfiedBy(parameters, commandString))
-                throw new ArgumentException(_placeCommandSpecification.ExceptionMessages[0]);
+            if (TryGetSpecificationException(parameters, commandString, out var errorMessages))
+                throw new ArgumentException(errorMessages[0]);
 
             _ = int.TryParse(parameters[0], out var xAxis);
 
@@ -40,6 +40,19 @@ namespace ToyRobot.Domain.Factories
             var parameters = parameterString.Split(',', placeCommandLength, StringSplitOptions.TrimEntries);
 
             return parameters.ToList();
+        }
+
+        private bool TryGetSpecificationException(List<string> parameters, string commandString, out List<string> errorMessages)
+        {
+            var specifications = _placeCommandSpecifications.Select(x =>
+                      (
+                          IsSatisfied: x.IsSatisfiedBy(parameters, commandString), 
+                          ErrorMessages: x.ExceptionMessages
+                      )).ToList();
+
+            errorMessages = specifications.Where(x => !x.IsSatisfied).SelectMany(x => x.ErrorMessages).ToList();
+
+            return specifications.Any(x => !x.IsSatisfied);
         }
     }
 }

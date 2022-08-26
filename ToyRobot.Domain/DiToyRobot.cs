@@ -41,6 +41,7 @@ namespace ToyRobot.Domain
         private static void RegisterSpecifications(IServiceCollection services)
         {
             services.AddScoped<IPlaceCommandSpecification, PlaceCommandSpecification>();
+            services.AddScoped<IPlaceCommandSpecification, PlaceCommandParameterSpecification>();
         }
     }
 }
