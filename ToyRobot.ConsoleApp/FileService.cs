@@ -5,7 +5,7 @@
         public static List<string> GetCommands(string filePath)
         {
             if (!File.Exists(filePath))
-                throw new FileNotFoundException(filePath);
+                throw new FileNotFoundException($"The file {filePath} is not found");
 
             var commands = new List<string>();
 

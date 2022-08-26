@@ -10,12 +10,12 @@ namespace ToyRobot.ConsoleApp
         {            
             var serviceCollection = new ServiceCollection();
 
-            RegisterServices(serviceCollection);
-
-            var commands = GetCommands();
+            RegisterServices(serviceCollection);                       
 
             try
             {
+                var commands = GetCommands();
+
                 ExecuteCommands(commands, serviceCollection);
             }
             catch (Exception ex)
