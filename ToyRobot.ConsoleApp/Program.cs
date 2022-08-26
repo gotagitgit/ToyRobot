@@ -15,14 +15,26 @@ namespace ToyRobot.ConsoleApp
             //var commands = GetCommands();
 
             var commands = new string[]
-            {                
-                "PLACE 0,0,EAST",
-                "MOVE",
-                "MOVE",
+            {
+                "move",
+                "move",
+                "move",
+                "move",
+                "PLACE 0,100,EAST",                
+                "move",
+                "move",
                 "REPORT"
             };
 
-            ExecuteCommands(commands, serviceCollection);
+            try
+            {
+                ExecuteCommands(commands, serviceCollection);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            
         }
 
         private static string[] GetCommands()

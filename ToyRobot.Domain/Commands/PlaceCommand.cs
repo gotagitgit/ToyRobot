@@ -16,8 +16,11 @@ namespace ToyRobot.Domain.Commands
 
                 var robot = new Robot(coordinate);
 
-                if (table.IsRobotFalling(placeCommandPayload.X, placeCommandPayload.Y))
-                    throw new InvalidOperationException("The command x and y coordinates are out of bounds");
+                var xAxis = placeCommandPayload.X;
+                var yAxis = placeCommandPayload.Y;
+
+                if (table.IsRobotFalling(xAxis, yAxis))
+                    throw new InvalidOperationException($"Place command {xAxis} and {yAxis} coordinates are out of bounds");
 
                 return table.SetRobotInPlace()
                             .WithRobot(robot);

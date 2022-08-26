@@ -112,7 +112,7 @@ namespace ToyRobot.Domain.Tests
             var ex = Assert.Throws<InvalidOperationException>(() => ToyRobotService.ProcessCommand(commands));
 
             // Assert
-            ex.Message.Should().Be("The command x and y coordinates are out of bounds");
+            ex.Message.Should().Be("Place command 100 and 100 coordinates are out of bounds");
         }
     }
 }
