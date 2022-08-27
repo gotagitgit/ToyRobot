@@ -11,12 +11,10 @@ namespace ToyRobot.Domain.Tests
 
             RegisterServices(serviceCollection);
 
-            var serviceProvider = serviceCollection.BuildServiceProvider();
-
-            ToyRobotService = serviceProvider.GetService<IToyRobotService>();
+            Services = serviceCollection.BuildServiceProvider();
         }
 
-        public IToyRobotService ToyRobotService { get; set; }
+        public ServiceProvider Services { get; }
 
         private static void RegisterServices(IServiceCollection services)
         {

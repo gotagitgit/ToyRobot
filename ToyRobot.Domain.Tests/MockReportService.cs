@@ -3,11 +3,18 @@ using ToyRobot.Domain.Services;
 
 namespace ToyRobot.Domain.Tests
 {
-    public class MockReportService : IReportService
+    public class MockReportService : IMockReportService
     {
+        public Coordinate? Coordinate { get; private set; }
+
         public void Report(Coordinate coordinate)
         {
-            // Do nothing
+            Coordinate = coordinate;
         }
+    }
+
+    public interface IMockReportService : IReportService
+    {
+        Coordinate? Coordinate { get; }
     }
 }

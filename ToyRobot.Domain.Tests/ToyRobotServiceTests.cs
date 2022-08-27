@@ -18,42 +18,39 @@ namespace ToyRobot.Domain.Tests
         public void Robot_should_not_fall_into_destruction(Direction direction, int xAxis, int yAxis)
         {
             // Arrange
-            var commands = new string[] { $"PLACE 2,2,{direction}", "MOVE", "MOVE", "MOVE", "MOVE", "MOVE", "MOVE", "MOVE" };
+            var commands = new string[] { $"PLACE 2,2,{direction}", "MOVE", "MOVE", "MOVE", "MOVE", "MOVE", "MOVE", "REPORT" };
 
             // Act
-            var result = ToyRobotService.ProcessCommand(commands);
+            ToyRobotService.ProcessCommand(commands);
 
             // Assert
-            var coordinate = result.Robot.Coordinate;
-            coordinate.Should().BeEquivalentTo(new Coordinate(xAxis, yAxis, direction));
+            ShouldMatchCoordinate(xAxis, yAxis, direction);
         }
 
         [Fact]
         public void Ignore_place_command_when_coordinate_is_out_of_table_boundaries()
         {
             // Arrange
-            var commands = new string[] { $"PLACE 100,100,NORTH", "MOVE", "", "MOVE", "", "MOVE", "", "MOVE" };
+            var commands = new string[] { $"PLACE 100,100,NORTH", "MOVE", "LEFT", "RIGHT", "REPORT" };
 
             // Act
             var result = ToyRobotService.ProcessCommand(commands);
 
-            // Assert
-            var coordinate = result.Robot.Coordinate;
-            coordinate.Should().BeEquivalentTo(Coordinate.Origin);
+            // Assert            
+            result.IsRobotInPlace.Should().BeFalse();
         }
 
         [Fact]
         public void Should_ignore_commands_until_place_command_is_executed()
         {
             // Arrange
-            var commands = new string[] { "MOVE", "MOVE", "MOVE", "MOVE", "MOVE", $"PLACE 2,2,NORTH", "MOVE", "MOVE" };
+            var commands = new string[] { "MOVE", "MOVE", "MOVE", "MOVE", "MOVE", $"PLACE 2,2,NORTH", "MOVE", "MOVE", "REPORT" };
 
             // Act
-            var result = ToyRobotService.ProcessCommand(commands);
+            ToyRobotService.ProcessCommand(commands);
 
             // Assert
-            var coordinate = result.Robot.Coordinate;
-            coordinate.Should().BeEquivalentTo(new Coordinate(2, 4, Direction.North));
+            ShouldMatchCoordinate(2, 4, Direction.North);
         }
 
         [Theory]
@@ -62,14 +59,13 @@ namespace ToyRobot.Domain.Tests
         public void Robot_should_be_able_to_change_direction(string command, int xAxis, int yAxis, Direction direction)
         {
             // Arrange
-            var commands = new string[] { $"PLACE 2,2,NORTH", "MOVE", "MOVE", command, "MOVE", "MOVE" };
+            var commands = new string[] { $"PLACE 2,2,NORTH", "MOVE", "MOVE", command, "MOVE", "MOVE" , "REPORT" };
 
             // Act
-            var result = ToyRobotService.ProcessCommand(commands);
+            ToyRobotService.ProcessCommand(commands);
 
             // Assert
-            var coordinate = result.Robot.Coordinate;
-            coordinate.Should().BeEquivalentTo(new Coordinate(xAxis, yAxis, direction));
+            ShouldMatchCoordinate(xAxis, yAxis, direction);
         }
 
         [Theory]
@@ -78,28 +74,26 @@ namespace ToyRobot.Domain.Tests
         public void Robot_can_do_360_rotation(string command, Direction direction)
         {
             // Arrange
-            var commands = new string[] { $"PLACE 2,2,NORTH", command, command, command, command };
+            var commands = new string[] { $"PLACE 2,2,NORTH", command, command, command, command, "REPORT" };
 
             // Act
-            var result = ToyRobotService.ProcessCommand(commands);
+            ToyRobotService.ProcessCommand(commands);
 
             // Assert
-            var coordinate = result.Robot.Coordinate;
-            coordinate.Should().BeEquivalentTo(new Coordinate(2, 2, direction));
+            ShouldMatchCoordinate(2, 2, direction);
         }
 
         [Fact]
         public void Should_ignore_empty_string_commands()
         {
             // Arrange
-            var commands = new string[] { $"PLACE 2,2,NORTH", "MOVE", "", "MOVE", "", "MOVE",  "", "MOVE" };
+            var commands = new string[] { $"PLACE 2,2,NORTH", "MOVE", "", "MOVE", "", "MOVE",  "", "MOVE", "REPORT" };
 
             // Act
-            var result = ToyRobotService.ProcessCommand(commands);
+            ToyRobotService.ProcessCommand(commands);
 
             // Assert
-            var coordinate = result.Robot.Coordinate;
-            coordinate.Should().BeEquivalentTo(new Coordinate(2, 4, Direction.North));
+            ShouldMatchCoordinate(2, 4, Direction.North);
         }
 
         [Fact]
@@ -114,6 +108,19 @@ namespace ToyRobot.Domain.Tests
 
             // Assert
             ex.Message.Should().Be($"{invalidCommand} is not a valid command");
-        }        
+        }
+
+        [Fact]
+        public void Should_execute_report_command()
+        {
+            // Arrange
+            var commands = new string[] { $"PLACE 2,2,NORTH", "MOVE", "REPORT" };
+
+            // Act
+            ToyRobotService.ProcessCommand(commands);
+
+            // Assert            
+            ShouldMatchCoordinate(2, 3, Direction.North);
+        }
     }
 }
