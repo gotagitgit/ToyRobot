@@ -14,12 +14,13 @@ namespace ToyRobot.Domain.Commands
 
             if (payload is PlaceCommandPayload placeCommandPayload)
             {
-                var coordinate = new Coordinate(placeCommandPayload.X, placeCommandPayload.Y, placeCommandPayload.Direction);
+                var payloadCoordinate = placeCommandPayload.Coordinate;
+                var xAxis = payloadCoordinate.X;
+                var yAxis = payloadCoordinate.Y;
+
+                var coordinate = new Coordinate(xAxis, yAxis, payloadCoordinate.Direction);
 
                 var robot = new Robot(coordinate);
-
-                var xAxis = placeCommandPayload.X;
-                var yAxis = placeCommandPayload.Y;
 
                 if (table.IsRobotFalling(xAxis, yAxis))
                     return table;

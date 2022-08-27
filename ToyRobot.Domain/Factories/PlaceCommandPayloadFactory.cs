@@ -6,9 +6,9 @@ namespace ToyRobot.Domain.Factories
 {
     public class PlaceCommandPayloadFactory : IParameterizeCommandPayloadFactory
     {
-        private readonly List<IPlaceCommandSpecification> _placeCommandSpecifications;
+        private readonly List<ISpecification<PlaceCommandSpecification>> _placeCommandSpecifications;
 
-        public PlaceCommandPayloadFactory(IEnumerable<IPlaceCommandSpecification> placeCommandSpecification)
+        public PlaceCommandPayloadFactory(IEnumerable<ISpecification<PlaceCommandSpecification>> placeCommandSpecification)
         {
             _placeCommandSpecifications = placeCommandSpecification.ToList();
         }
@@ -28,7 +28,9 @@ namespace ToyRobot.Domain.Factories
 
             _ = Enum.TryParse<Direction>(parameters[2], true, out var direction);
 
-            return new PlaceCommandPayload(xAxis, yAxis, direction, table, command);
+            var coordinate = new Coordinate(xAxis, yAxis, direction);
+
+            return new PlaceCommandPayload(coordinate, table, command);
         }
 
         private List<string> GetParameters(string commandString)
@@ -44,9 +46,11 @@ namespace ToyRobot.Domain.Factories
 
         private bool TryGetSpecificationException(List<string> parameters, string commandString, out string? errorMessage)
         {
+            var placeCommandSpecification = new PlaceCommandSpecification(commandString, parameters);
+
             var specifications = _placeCommandSpecifications.Select(x =>
                       (
-                          IsSatisfied: x.IsSatisfiedBy(parameters, commandString),
+                          IsSatisfied: x.IsSatisfiedBy(placeCommandSpecification),
                           ExceptionMessage: x.ExceptionMessage
                       )).ToList();
 

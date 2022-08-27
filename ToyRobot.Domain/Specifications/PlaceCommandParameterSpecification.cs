@@ -4,15 +4,15 @@ using ToyRobot.Domain.Models;
 
 namespace ToyRobot.Domain.Specifications
 {
-    public class PlaceCommandParameterSpecification : IPlaceCommandSpecification
+    public class PlaceCommandParameterSpecification : ISpecification<PlaceCommandSpecification>
     {
         public string ExceptionMessage { get; private set; } = String.Empty;
 
-        public bool IsSatisfiedBy(List<string> parameters, string commandString)
+        public bool IsSatisfiedBy(PlaceCommandSpecification category)
         {
-            if (!IsValidateParameterPattern(commandString))
+            if (!IsValidParameterPattern(category.CommandString))
             {
-                ExceptionMessage = ($"{commandString} has invalid parameter format");
+                ExceptionMessage = ($"{category.CommandString} has invalid parameter format");
 
                 return false;
             }
@@ -20,7 +20,7 @@ namespace ToyRobot.Domain.Specifications
             return true;
         }
 
-        private static bool IsValidateParameterPattern(string commandString)
+        private static bool IsValidParameterPattern(string commandString)
         {
             var parameterString = Command.Place.GetParameters(commandString);
 

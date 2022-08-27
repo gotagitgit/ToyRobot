@@ -10,9 +10,9 @@ namespace ToyRobot.Domain.Tests
     {
         public PlaceCommandPayloadFactoryTests()
         {
-            var specifications = new List<IPlaceCommandSpecification>
+            var specifications = new List<ISpecification<PlaceCommandSpecification>>
             {
-                new PlaceCommandSpecification(),
+                new PlaceCommandCountSpecification(),
                 new PlaceCommandParameterSpecification()
             };
 
@@ -32,7 +32,8 @@ namespace ToyRobot.Domain.Tests
             // Arrange            
             var table = Table.Default();
             var command = Command.Place;
-            var expected = new PlaceCommandPayload(0, 0, Direction.North, table, command);
+            var coordinate = new Coordinate(0, 0, Direction.North);
+            var expected = new PlaceCommandPayload(coordinate, table, command);
 
             // Act 
             var result = Sut.Create(table, command, commandString);

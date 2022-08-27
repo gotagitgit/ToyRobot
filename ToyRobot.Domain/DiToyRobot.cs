@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ToyRobot.Domain.Commands;
 using ToyRobot.Domain.Factories;
+using ToyRobot.Domain.Models;
 using ToyRobot.Domain.Services;
 using ToyRobot.Domain.Specifications;
 
@@ -40,8 +41,8 @@ namespace ToyRobot.Domain
 
         private static void RegisterSpecifications(IServiceCollection services)
         {
-            services.AddScoped<IPlaceCommandSpecification, PlaceCommandSpecification>();
-            services.AddScoped<IPlaceCommandSpecification, PlaceCommandParameterSpecification>();
+            services.AddScoped<ISpecification<PlaceCommandSpecification>, PlaceCommandCountSpecification>();
+            services.AddScoped<ISpecification<PlaceCommandSpecification>, PlaceCommandParameterSpecification>();
         }
     }
 }
