@@ -7,6 +7,7 @@ namespace ToyRobot.ConsoleApp
     {
         public void Report(Coordinate coordinate)
         {
+            Console.WriteLine("\n");
             Console.WriteLine($"Output: {coordinate.X}, {coordinate.Y}, {coordinate.Direction}");
         }
     }

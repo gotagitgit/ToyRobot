@@ -22,7 +22,8 @@ namespace ToyRobot.ConsoleApp
             {
                 Console.WriteLine($"Error: {ex.Message}");
             }
-            
+
+            Console.ReadLine();
         }
 
         private static string[] GetCommands()

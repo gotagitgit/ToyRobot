@@ -26,11 +26,9 @@ namespace ToyRobot.Domain.Services
                 if (string.IsNullOrEmpty(commandString))
                     continue;
 
-                var commandPayload = _parseStringCommandService.Parse(commandString, table);
+                var commandPayload = _parseStringCommandService.Parse(commandString, table);                
 
-                var command = commandPayload.Command;
-
-                var commandHandler = _commandHandlerFactory.Create(command);                
+                var commandHandler = _commandHandlerFactory.Create(commandPayload.Command);                
                 
                 if (table.IsRobotInPlace || IsPrimaryCommand(commandHandler))
                     table = commandHandler.Execute(commandPayload);
