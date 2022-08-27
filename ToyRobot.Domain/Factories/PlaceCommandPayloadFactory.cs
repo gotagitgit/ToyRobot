@@ -35,7 +35,7 @@ namespace ToyRobot.Domain.Factories
 
         private List<string> GetParameters(string commandString)
         {
-            var placeCommandLength = Command.ToString().Count();
+            var placeCommandLength = Command.ToString().Length;
 
             var parameterString = Command.GetParameters(commandString);
 
@@ -50,8 +50,7 @@ namespace ToyRobot.Domain.Factories
 
             var specifications = _placeCommandSpecifications.Select(x =>
                       (
-                          IsSatisfied: x.IsSatisfiedBy(placeCommandSpecification),
-                          ExceptionMessage: x.ExceptionMessage
+                          IsSatisfied: x.IsSatisfiedBy(placeCommandSpecification), x.ExceptionMessage
                       )).ToList();
 
             errorMessage = specifications.Where(x => !x.IsSatisfied)

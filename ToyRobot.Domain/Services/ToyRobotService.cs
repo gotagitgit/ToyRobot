@@ -40,7 +40,7 @@ namespace ToyRobot.Domain.Services
         private static bool IsPrimaryCommand(ICommand command)
         {
             if (command is IPrimaryCommand primaryCommand)
-                return primaryCommand.IsPrimaryCommnd;
+                return primaryCommand.IsPrimaryCommand;
 
             return false;
         }

@@ -1,7 +1,7 @@
 ﻿namespace ToyRobot.Domain.Commands
 {
-    public interface IPrimaryCommand 
+    public interface IPrimaryCommand : ICommand
     {
-        bool IsPrimaryCommnd { get; }
+        bool IsPrimaryCommand { get; }
     }
 }

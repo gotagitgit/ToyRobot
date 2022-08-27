@@ -10,13 +10,9 @@ namespace ToyRobot.Domain.Tests
     {
         public PlaceCommandPayloadFactoryTests()
         {
-            var specifications = new List<ISpecification<PlaceCommandSpecification>>
-            {
-                new PlaceCommandCountSpecification(),
-                new PlaceCommandParameterSpecification()
-            };
+            var context = new TestContext();
 
-            Sut = new PlaceCommandPayloadFactory(specifications);
+            Sut = new PlaceCommandPayloadFactory(context.Specifications);
         }
 
         public PlaceCommandPayloadFactory Sut { get; }
@@ -80,6 +76,15 @@ namespace ToyRobot.Domain.Tests
 
             // Assert
             ex.Message.Should().BeEquivalentTo($"{commandString} has more than the allowed number of parameters");
+        }
+
+        public class TestContext
+        {
+            public List<ISpecification<PlaceCommandSpecification>> Specifications = new()
+            {
+                new PlaceCommandCountSpecification(),
+                new PlaceCommandParameterSpecification()
+            };        
         }
     }
 }
