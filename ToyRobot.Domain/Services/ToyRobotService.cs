@@ -1,4 +1,5 @@
-﻿using ToyRobot.Domain.Factories;
+﻿using ToyRobot.Domain.Commands;
+using ToyRobot.Domain.Factories;
 using ToyRobot.Domain.Models;
 
 namespace ToyRobot.Domain.Services
@@ -29,13 +30,21 @@ namespace ToyRobot.Domain.Services
 
                 var command = commandPayload.Command;
 
-                var commandHandler = _commandHandlerFactory.Create(command);
+                var commandHandler = _commandHandlerFactory.Create(command);                
                 
-                if (table.IsRobotInPlace || command == Command.Place)
+                if (table.IsRobotInPlace || IsPrimaryCommand(commandHandler))
                     table = commandHandler.Execute(commandPayload);
             }
 
             return table;
+        }
+
+        private static bool IsPrimaryCommand(ICommand command)
+        {
+            if (command is IPrimaryCommand primaryCommand)
+                return primaryCommand.IsPrimaryCommnd;
+
+            return false;
         }
     }
 }

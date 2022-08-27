@@ -2,9 +2,11 @@
 
 namespace ToyRobot.Domain.Commands
 {
-    public sealed class PlaceCommand : ICommand
+    public sealed class PlaceCommand : ICommand, IPrimaryCommand
     {
         public Command Command => Command.Place;
+
+        public bool IsPrimaryCommnd => true;
 
         public Table Execute(CommandPayload payload)
         {
