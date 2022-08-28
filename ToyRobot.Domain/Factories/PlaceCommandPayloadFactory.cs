@@ -1,18 +1,12 @@
 ﻿using ToyRobot.Domain.Extensions;
 using ToyRobot.Domain.Models;
 using ToyRobot.Domain.Specifications;
+using ToyRobot.Domain.Specifications.PlaceCommandSpecifications;
 
 namespace ToyRobot.Domain.Factories
 {
     public class PlaceCommandPayloadFactory : IParameterizeCommandPayloadFactory
     {
-        private readonly List<ISpecification<PlaceCommandSpecification>> _placeCommandSpecifications;
-
-        public PlaceCommandPayloadFactory(IEnumerable<ISpecification<PlaceCommandSpecification>> placeCommandSpecification)
-        {
-            _placeCommandSpecifications = placeCommandSpecification.ToList();
-        }
-
         public Command Command => Command.Place;
 
         public CommandPayload Create(Table table, Command command, string commandString)
@@ -48,15 +42,41 @@ namespace ToyRobot.Domain.Factories
         {
             var placeCommandSpecification = new PlaceCommandSpecification(commandString, parameters);
 
-            var specifications = _placeCommandSpecifications.Select(x =>
-                      (
-                          IsSatisfied: x.IsSatisfiedBy(placeCommandSpecification), x.ExceptionMessage
-                      )).ToList();
+            var parameterCountSpecification = new ParameterCountSpecification();
+            var parameterFormatSpecifiation = new ParameterFormatSpecification();
 
-            errorMessage = specifications.Where(x => !x.IsSatisfied)
-                                .Select(x => x.ExceptionMessage).FirstOrDefault();
+            var specification = parameterCountSpecification.And(parameterFormatSpecifiation);
 
-            return specifications.Any(x => !x.IsSatisfied);
+            var isValid = specification.IsSatisfiedBy(placeCommandSpecification);
+
+            errorMessage = String.Empty;
+            if (!isValid)
+            {
+                errorMessage = specification.ExceptionMessage;
+                return true;
+            }
+
+            return false;
+
+            //var specifications = _placeCommandSpecifications.Select(x =>
+            //          (
+            //              IsSatisfied: x.IsSatisfiedBy(placeCommandSpecification), x.ExceptionMessage
+            //          )).ToList();
+
+            //errorMessage = specifications.Where(x => !x.IsSatisfied)
+            //                    .Select(x => x.ExceptionMessage).FirstOrDefault();
+
+            //return specifications.Any(x => !x.IsSatisfied);
         }
+
+        private List<ISpecification<PlaceCommandSpecification>> GetSpecifications()
+        {
+            return new List<ISpecification<PlaceCommandSpecification>>
+            {
+                new ParameterCountSpecification(),
+                new ParameterFormatSpecification()
+            };
+        }
+
     }
 }

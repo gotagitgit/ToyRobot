@@ -14,7 +14,7 @@ namespace ToyRobot.Domain
             RegisterCommands(services);
             RegisterFactories(services);
             RegisterServices(services);
-            RegisterSpecifications(services);
+            //RegisterSpecifications(services);
         }
 
         private static void RegisterCommands(IServiceCollection services)
@@ -39,10 +39,10 @@ namespace ToyRobot.Domain
             services.AddScoped<IToyRobotService, ToyRobotService>();
         }
 
-        private static void RegisterSpecifications(IServiceCollection services)
-        {
-            services.AddScoped<ISpecification<PlaceCommandSpecification>, PlaceCommandCountSpecification>();
-            services.AddScoped<ISpecification<PlaceCommandSpecification>, PlaceCommandParameterSpecification>();
-        }
+        //private static void RegisterSpecifications(IServiceCollection services)
+        //{
+        //    services.AddScoped<ISpecification<PlaceCommandSpecification>, PlaceCommandCountSpecification>();
+        //    services.AddScoped<ISpecification<PlaceCommandSpecification>, PlaceCommandParameterSpecification>();
+        //}
     }
 }

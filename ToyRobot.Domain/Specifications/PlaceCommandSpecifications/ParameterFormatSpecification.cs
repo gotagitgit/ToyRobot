@@ -2,17 +2,17 @@
 using ToyRobot.Domain.Extensions;
 using ToyRobot.Domain.Models;
 
-namespace ToyRobot.Domain.Specifications
+namespace ToyRobot.Domain.Specifications.PlaceCommandSpecifications
 {
-    public class PlaceCommandParameterSpecification : ISpecification<PlaceCommandSpecification>
+    internal class ParameterFormatSpecification : CompositeSpecification<PlaceCommandSpecification>
     {
-        public string ExceptionMessage { get; private set; } = String.Empty;
-
-        public bool IsSatisfiedBy(PlaceCommandSpecification category)
+        public override bool IsSatisfiedBy(PlaceCommandSpecification category)
         {
             if (!IsValidParameterPattern(category.CommandString))
             {
-                ExceptionMessage = ($"{category.CommandString} has invalid parameter format");
+                var exceptionMessage = ($"{category.CommandString} has invalid parameter format");
+
+                SetExceptionMessage(exceptionMessage);
 
                 return false;
             }
