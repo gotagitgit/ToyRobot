@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using ToyRobot.Domain.Factories;
 using ToyRobot.Domain.Models;
-using ToyRobot.Domain.Specifications;
 using Xunit;
 
 namespace ToyRobot.Domain.Tests

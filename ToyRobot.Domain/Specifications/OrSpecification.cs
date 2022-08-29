@@ -13,7 +13,13 @@
 
         public override bool IsSatisfiedBy(T category)
         {
-            return _leftSpecification.IsSatisfiedBy(category) || _rightSpecification.IsSatisfiedBy(category);
+            var isSatisfied = _leftSpecification.IsSatisfiedBy(category) || _rightSpecification.IsSatisfiedBy(category);
+
+            ExceptionMessages.AddRange(_leftSpecification.ExceptionMessages);
+
+            ExceptionMessages.AddRange(_rightSpecification.ExceptionMessages);
+
+            return isSatisfied;
         }
     }
 }

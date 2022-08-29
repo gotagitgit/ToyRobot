@@ -10,7 +10,7 @@ namespace ToyRobot.Domain.Specifications.PlaceCommandSpecifications
             {
                 var exceptionMessage = ($"{category.CommandString} has more than the allowed number of parameters");
 
-                SetExceptionMessage(exceptionMessage);
+                ExceptionMessages.Add(exceptionMessage);
 
                 return false;
             }

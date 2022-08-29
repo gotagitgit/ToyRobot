@@ -13,7 +13,7 @@ namespace ToyRobot.Domain.Factories
         {
             var parameters = GetParameters(commandString);
 
-            if (TryGetSpecificationException(parameters, commandString, out var errorMessage))
+            if (!IsPlaceCommandSpecificationsSatisfied(parameters, commandString, out var errorMessage))
                 throw new ArgumentException(errorMessage);
 
             _ = int.TryParse(parameters[0], out var xAxis);
@@ -38,45 +38,26 @@ namespace ToyRobot.Domain.Factories
             return parameters.ToList();
         }
 
-        private bool TryGetSpecificationException(List<string> parameters, string commandString, out string? errorMessage)
+        private static bool IsPlaceCommandSpecificationsSatisfied(List<string> parameters, string commandString, out string? errorMessage)
         {
             var placeCommandSpecification = new PlaceCommandSpecification(commandString, parameters);
-
-            var parameterCountSpecification = new ParameterCountSpecification();
-            var parameterFormatSpecifiation = new ParameterFormatSpecification();
-
-            var specification = parameterCountSpecification.And(parameterFormatSpecifiation);
+            
+            var specification = CreateSpecification();
 
             var isValid = specification.IsSatisfiedBy(placeCommandSpecification);
 
-            errorMessage = String.Empty;
-            if (!isValid)
-            {
-                errorMessage = specification.ExceptionMessage;
-                return true;
-            }
+            errorMessage = specification.ExceptionMessages.FirstOrDefault();
 
-            return false;
-
-            //var specifications = _placeCommandSpecifications.Select(x =>
-            //          (
-            //              IsSatisfied: x.IsSatisfiedBy(placeCommandSpecification), x.ExceptionMessage
-            //          )).ToList();
-
-            //errorMessage = specifications.Where(x => !x.IsSatisfied)
-            //                    .Select(x => x.ExceptionMessage).FirstOrDefault();
-
-            //return specifications.Any(x => !x.IsSatisfied);
+            return isValid;
         }
 
-        private List<ISpecification<PlaceCommandSpecification>> GetSpecifications()
+        private static ISpecification<PlaceCommandSpecification> CreateSpecification()
         {
-            return new List<ISpecification<PlaceCommandSpecification>>
-            {
-                new ParameterCountSpecification(),
-                new ParameterFormatSpecification()
-            };
-        }
+            var parameterCountSpecification = new ParameterCountSpecification();
 
+            var parameterFormatSpecifiation = new ParameterFormatSpecification();
+
+            return parameterCountSpecification.And(parameterFormatSpecifiation);
+        }
     }
 }

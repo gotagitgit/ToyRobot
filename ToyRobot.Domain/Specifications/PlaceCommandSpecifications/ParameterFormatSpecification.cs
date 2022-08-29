@@ -12,7 +12,7 @@ namespace ToyRobot.Domain.Specifications.PlaceCommandSpecifications
             {
                 var exceptionMessage = ($"{category.CommandString} has invalid parameter format");
 
-                SetExceptionMessage(exceptionMessage);
+                ExceptionMessages.Add(exceptionMessage);
 
                 return false;
             }

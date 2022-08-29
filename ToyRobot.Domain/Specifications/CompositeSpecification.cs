@@ -2,9 +2,7 @@
 {
     public abstract class CompositeSpecification<T> : ISpecification<T>
     {
-        private string _exceptionMessage = string.Empty;
-
-        public string ExceptionMessage => _exceptionMessage;
+        public List<string> ExceptionMessages { get; } = new List<string>();
 
         public abstract bool IsSatisfiedBy(T category);
 
@@ -16,8 +14,11 @@
         public ISpecification<T> Or(ISpecification<T> specification)
         {
             return new OrSpecification<T>(this, specification);
-        }
+        }        
 
-        protected void SetExceptionMessage(string exceptonMessage) => _exceptionMessage = exceptonMessage;
+        public ISpecification<T> Not(ISpecification<T> specification)
+        {
+            return new NotSpecification<T>(specification);
+        }
     }
 }
