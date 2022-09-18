@@ -2,7 +2,7 @@
 {
     public interface ISpecification<T>
     {
-        string ExceptionMessage { get; }
+        List<string> ExceptionMessages { get; }
 
         bool IsSatisfiedBy(T category);
     }
